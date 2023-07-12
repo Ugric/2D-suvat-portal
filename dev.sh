@@ -1,0 +1,1 @@
+tsc script.ts --outDir ./static --watch & npx serve ./static
