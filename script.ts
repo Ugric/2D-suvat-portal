@@ -243,6 +243,7 @@ function particle(
                                 Math.max(deltaDistance -
                                 distanceFromIntersectionParticle, 1);
                             if (!particle.insidePortal) {
+                                currentlyClickedParticle = null;
                                 const angle =
                                     ((Math.atan2(
                                         intersection.y - particle.y,
