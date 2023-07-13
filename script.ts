@@ -67,7 +67,7 @@ let controllingPortal = 0;
 
 window.addEventListener("keydown", (e) => {
     if (e.ctrlKey || e.altKey || e.metaKey) return;
-    e.preventDefault()
+    e.preventDefault();
     const portal = portals[controllingPortal];
     switch (e.key) {
         case "Tab":
@@ -240,29 +240,29 @@ function particle(
                         );
                         if (distanceFromIntersectionParticle <= deltaDistance) {
                             const deltaPassedDistance =
-                                deltaDistance -
-                                distanceFromIntersectionParticle;
+                                Math.max(deltaDistance -
+                                distanceFromIntersectionParticle, 1);
                             if (!particle.insidePortal) {
-                                const angle =(
-                                    (Math.atan2(
+                                const angle =
+                                    ((Math.atan2(
                                         intersection.y - particle.y,
                                         intersection.x - particle.x
                                     ) *
                                         180) /
                                         Math.PI -
-                                    (portal.rotation + 90)) % 360;
+                                        (portal.rotation + 90)) %
+                                    360;
                                 if (angle > -90 && angle < 90) {
                                     const newangle =
                                         -angle - portal.connected.rotation;
                                     const newangleRad =
                                         (newangle * Math.PI) / 180;
-                                    const newVelocity =
-                                        Math.sqrt(
-                                            particle.vertical.velocity *
-                                                particle.vertical.velocity +
-                                                particle.horizontal.velocity *
-                                                    particle.horizontal.velocity
-                                        );
+                                    const newVelocity = Math.sqrt(
+                                        particle.vertical.velocity *
+                                            particle.vertical.velocity +
+                                            particle.horizontal.velocity *
+                                                particle.horizontal.velocity
+                                    );
                                     newYVelocity =
                                         -Math.cos(newangleRad) * newVelocity;
                                     newXVelocity =
@@ -278,8 +278,10 @@ function particle(
                                 }
                                 particle.insidePortal = true;
                             }
+                        } else {
+                            particle.insidePortal = false;
+                            break;
                         }
-                        break;
                     }
                 }
             }
